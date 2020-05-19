@@ -203,7 +203,7 @@ export class Notepad extends React.Component<Props, State> {
           <div
             className='pane'
             style={{
-              background: this.state.toggleTheme ? '#272525' : 'white',
+              background: this.state.toggleTheme ? '#272525' : 'whitesmoke',
               color: this.state.toggleTheme ? 'white' : 'black',
             }}
           >
@@ -266,7 +266,7 @@ export class Notepad extends React.Component<Props, State> {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-evenly',
-                background: this.state.toggleTheme ? '#272525' : 'white',
+                background: this.state.toggleTheme ? '#272525' : 'whitesmoke',
                 borderTop: this.state.toggleTheme
                   ? '1px solid white'
                   : '2px solid black',
