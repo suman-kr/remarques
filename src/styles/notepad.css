@@ -1,0 +1,67 @@
+body {
+  height: 97vh;
+   background-image: url(../assets/task.jpg);
+   background-attachment: fixed;
+   background-repeat: no-repeat;
+   background-size: cover;
+}
+
+#table {
+  min-width: 200px;
+  min-height: 500px;
+  max-width: 100%;
+  max-height: 700px;
+  background: white;
+  overflow: auto;
+  padding: 7px;
+  box-shadow: 0px 6px 6px -3px rgba(0, 0, 0, 0.2),
+    0px 10px 14px 1px rgba(0, 0, 0, 0.14), 0px 4px 18px 3px rgba(0, 0, 0, 0.12);
+}
+#data {
+  vertical-align: top;
+  max-width: 800px;
+  max-height: 800px;
+}
+
+*:focus {
+  outline: none;
+}
+.title::placeholder {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+[contenteditable="true"]:empty:before {
+  content: attr(placeholder);
+  pointer-events: none;
+  color: darkgray;
+}
+
+
+.pane {
+  background: whitesmoke;
+  box-shadow: 0px 6px 6px -3px rgba(0, 0, 0, 0.2),
+    0px 10px 14px 1px rgba(0, 0, 0, 0.14), 0px 4px 18px 3px rgba(0, 0, 0, 0.12);
+}
+.list {
+  padding: 10px;
+  border-bottom: 2px solid gray;
+  list-style: circle;
+  cursor: pointer;
+  word-wrap: break-word;
+}
+
+.list:hover {
+  opacity: 60%;
+}
+
+.notepad-icons {
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  border-bottom: 1px solid;
+}
+.notepad-icons:hover{
+  opacity: 60%;
+  border: 1px solid;
+}
