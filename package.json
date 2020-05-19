@@ -1,7 +1,7 @@
 {
   "name": "react-typescript",
   "version": "1.0.0",
-  "description": "LIGHT",
+  "description": "Remarques",
   "main": "index.js",
   "scripts": {
     "bundle": "webpack",
@@ -10,6 +10,7 @@
     "build": "webpack --mode production",
     "check-types": "tsc"
   },
+  "homepage": "https://suman-kr.github.io/remarques/",
   "keywords": [],
   "author": "",
   "license": "MIT",
