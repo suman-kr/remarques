@@ -144,7 +144,7 @@ export class Notepad extends React.Component<Props, State> {
 
   deleteNote = (ind: number) => {
     const {items} = this.state;
-    items.splice(ind);
+    items.splice(ind, 1);
     this.setState({items});
   }
   render() {
