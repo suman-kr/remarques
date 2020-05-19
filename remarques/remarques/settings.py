@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'notes',
+    'graphene_django',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'remarques.urls'
+
+GRAPHENE = {
+    'SCHEMA': 'remarques.schema.schema'
+}
 
 TEMPLATES = [
     {
