@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development --open --hot --history-api-fallback",
     "build": "webpack --mode production",
-    "check-types": "tsc"
+    "check-types": "tsc",
+    "deploy": "gh-pages -d dist"
   },
   "homepage": "https://suman-kr.github.io/remarques/",
   "keywords": [],
@@ -26,6 +27,7 @@
     "@types/react-router-dom": "^5.1.4",
     "css-loader": "^3.5.2",
     "file-loader": "^6.0.0",
+    "gh-pages": "^2.2.0",
     "html-webpack-plugin": "^4.2.0",
     "style-loader": "^1.1.3",
     "tslint": "^6.1.1",
