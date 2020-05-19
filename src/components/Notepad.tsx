@@ -1,7 +1,7 @@
 import * as React from 'react';
 import '../styles/notepad.css';
 import { Dialog, DialogTitle, TextField, Button } from '@material-ui/core';
-import { MdCheck, MdClose } from 'react-icons/md';
+import { MdCheck, MdClose, MdDelete } from 'react-icons/md';
 export class Notepad extends React.Component<Props, State> {
   divRef: React.RefObject<any> = React.createRef();
   titleRef: React.RefObject<HTMLInputElement> = React.createRef();
@@ -116,26 +116,36 @@ export class Notepad extends React.Component<Props, State> {
   }
 
   clear = () => {
-    const title = document.getElementById('note-title') as HTMLInputElement;
-    const table = document.getElementById('table');
-    if (table) table.innerHTML = '';
-    if (title) title.value = '';
+    this.divRef.current.innerHTML = '';
+    this.titleRef.current!.value = '';
+    let {currentContent, currentTitle} = this.state;
+    currentContent = '';
+    currentTitle = '';
+    this.setState({currentContent, currentTitle});
   }
 
   save = () => {
     let { items, currentContent, currentTitle } = this.state;
     if (currentTitle.length) {
       items.push({ title: currentTitle, content: currentContent });
-      currentTitle = '';
-      currentContent = '';
       this.setState({ items, currentContent, currentTitle });
       this.clear();
     }
   }
 
   displayNotes = (title: string, content: string) => {
+    let {currentTitle, currentContent} = this.state;
     this.titleRef.current!.value = title;
     this.divRef.current.innerHTML = content;
+    currentTitle = title;
+    currentContent = content;
+    this.setState({currentTitle, currentContent});
+  }
+
+  deleteNote = (ind: number) => {
+    const {items} = this.state;
+    items.splice(ind);
+    this.setState({items});
   }
   render() {
     return (
@@ -208,13 +218,20 @@ export class Notepad extends React.Component<Props, State> {
             }}
           >
             <ul>
-              {this.state.items.map((e) => (
+              {this.state.items.map((e, i) => (
+                <>
                 <li
                   className='list'
                   onClick={() => this.displayNotes(e.title, e.content)}
                 >
                   {e.title}
                 </li>
+                <span>
+                   <div className='delete' onClick={() => { this.clear(); this.deleteNote(i);}}>
+                  <MdDelete />
+                  </div>
+                </span>
+                </>
               ))}
             </ul>
           </div>

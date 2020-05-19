@@ -65,3 +65,15 @@ body {
   opacity: 60%;
   border: 1px solid;
 }
+
+.delete{
+  float: right;
+  position: relative;
+  top: -30px;
+  color: red;
+  cursor: pointer;
+}
+.delete:hover{
+  background-color: red;
+  color: lightgray;
+}
