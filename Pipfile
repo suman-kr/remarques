@@ -11,6 +11,7 @@ django = "==2.2.10"
 django-cors-headers = "*"
 djangorestframework = "*"
 graphene-django = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.6"
