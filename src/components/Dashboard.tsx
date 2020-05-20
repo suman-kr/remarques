@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { Notepad } from './Notepad';
-
-export class Dashboard extends React.PureComponent<{}, {}> {
+import { Redirect } from 'react-router-dom';
+export class Dashboard extends React.PureComponent<Props, {}> {
   render() {
-    return (
-      <Notepad />
-    );
+    return <>
+      <Redirect to={this.props.url} />
+    </>
   }
 }
 
+
+interface Props{
+  url: string;
+}
