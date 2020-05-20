@@ -6,6 +6,9 @@ import { Notepad } from './Notepad';
 
 export class App extends React.PureComponent {
   url = generateURL();
+  componentDidMount() {
+    localStorage.setItem('url_path', window.location.pathname);
+  }
   render() {
     return (
       <BrowserRouter>
