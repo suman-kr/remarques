@@ -13,7 +13,7 @@ export class App extends React.PureComponent {
           <Route exact path='/'>
             <Dashboard url={this.url} />
           </Route>
-          <Route exact path={`/${this.url}`} component={Notepad} />
+          <Route exact path={`/:${this.url}`} component={Notepad} />
         </Switch>
       </BrowserRouter>
     );
