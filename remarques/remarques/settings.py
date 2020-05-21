@@ -77,7 +77,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'remarques.wsgi.application'
-
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -85,11 +85,11 @@ WSGI_APPLICATION = 'remarques.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'notepad',
-        'USER': 'notepaduser',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': os.environ.get('DB_NAME','notepad'),
+        'USER': os.environ.get('DB_USER','notepaduser'),
+        'PASSWORD': os.environ.get('DB_PASS','password'),
+        'HOST': os.environ.get('DB_HOST','localhost'),
+        'PORT': os.environ.get('DB_PORT',5432),
     }
 }
 
@@ -117,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 

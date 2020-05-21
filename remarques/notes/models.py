@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 # Create your models here.
-class notepad(models.Model):
+class Notepad(models.Model):
     url = models.CharField(max_length=100)
     notes = JSONField()
 
