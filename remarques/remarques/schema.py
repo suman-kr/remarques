@@ -17,6 +17,7 @@ class NotesNode(DjangoObjectType):
 
 
 class Query(ObjectType):
+    note = Node.Field(NotesNode)
     all_notes = DjangoFilterConnectionField(NotesNode)
 
 
