@@ -118,10 +118,10 @@ export class Notepad extends React.Component<Props, State> {
   clear = () => {
     this.divRef.current.innerHTML = '';
     this.titleRef.current!.value = '';
-    let {currentContent, currentTitle} = this.state;
+    let { currentContent, currentTitle } = this.state;
     currentContent = '';
     currentTitle = '';
-    this.setState({currentContent, currentTitle});
+    this.setState({ currentContent, currentTitle });
   }
 
   save = () => {
@@ -134,18 +134,18 @@ export class Notepad extends React.Component<Props, State> {
   }
 
   displayNotes = (title: string, content: string) => {
-    let {currentTitle, currentContent} = this.state;
+    let { currentTitle, currentContent } = this.state;
     this.titleRef.current!.value = title;
     this.divRef.current.innerHTML = content;
     currentTitle = title;
     currentContent = content;
-    this.setState({currentTitle, currentContent});
+    this.setState({ currentTitle, currentContent });
   }
 
   deleteNote = (ind: number) => {
-    const {items} = this.state;
+    const { items } = this.state;
     items.splice(ind, 1);
-    this.setState({items});
+    this.setState({ items });
   }
   render() {
     return (
@@ -217,23 +217,55 @@ export class Notepad extends React.Component<Props, State> {
               color: this.state.toggleTheme ? 'white' : 'black',
             }}
           >
-            <ul>
-              {this.state.items.map((e, i) => (
-                <>
-                <li
-                  className='list'
-                  onClick={() => this.displayNotes(e.title, e.content)}
-                >
-                  {e.title}
-                </li>
-                <span>
-                   <div className='delete' onClick={() => { this.clear(); this.deleteNote(i);}}>
-                  <MdDelete />
-                  </div>
-                </span>
-                </>
-              ))}
-            </ul>
+            <div
+              style={{
+                textAlign: 'center',
+                padding: '10px',
+                fontWeight: 'bold',
+              }}
+            >
+              NOTES
+            </div>
+            <hr style={{ borderBottom: 0, width: '90%' }} />
+            {this.state.items.length ? (
+              <ul>
+                {this.state.items.map((e, i) => (
+                  <>
+                    <li
+                      className='list'
+                      onClick={() => this.displayNotes(e.title, e.content)}
+                    >
+                      {e.title}
+                    </li>
+                    <span>
+                      <div
+                        className='delete'
+                        onClick={() => {
+                          this.clear();
+                          this.deleteNote(i);
+                        }}
+                      >
+                        <MdDelete />
+                      </div>
+                    </span>
+                  </>
+                ))}
+              </ul>
+            ) : (
+              <div
+                style={{
+                  margin: '50% 0 50% 0',
+                  textAlign: 'center',
+                  height: 'auto',
+                  color: '#908f8f'
+                }}
+              >
+                Nothing here!
+                <p>
+                ¯\_(ツ)_/¯
+                </p>
+              </div>
+            )}
           </div>
           <div>
             <div
