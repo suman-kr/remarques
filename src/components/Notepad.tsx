@@ -31,21 +31,6 @@ export class Notepad extends React.Component<Props, State> {
     notepadId?.appendChild(span);
   }
 
-  boldText = () => {
-    let { boldClass } = this.state;
-    let { toggleBold } = this.state;
-    toggleBold = !toggleBold;
-    this.setState({ toggleBold });
-    if (toggleBold) {
-      boldClass += 1;
-      this.setState({ boldClass });
-      const boldTag = document.createElement('b');
-      boldTag.setAttribute('class', `bold-${boldClass}`);
-      const notepadId = document.getElementById('table');
-      notepadId?.appendChild(boldTag);
-    }
-  }
-
   insertLinkDialog = () => (
     <Dialog
       onClose={this.toggleDialog}
@@ -157,7 +142,7 @@ export class Notepad extends React.Component<Props, State> {
             justifyContent: 'center',
           }}
         >
-          <button
+          {/* <button
             onClick={this.toggleDialog}
             style={{
               color: 'black',
@@ -172,8 +157,8 @@ export class Notepad extends React.Component<Props, State> {
             }}
           >
             Link
-          </button>
-          <button
+          </button> */}
+          {/* <button
             onClick={() => this.boldText()}
             style={{
               color: 'black',
@@ -189,7 +174,7 @@ export class Notepad extends React.Component<Props, State> {
             }}
           >
             B
-          </button>
+          </button> */}
           <button
             onClick={() => {
               this.setState({ toggleTheme: !this.state.toggleTheme });
