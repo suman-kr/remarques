@@ -3,8 +3,6 @@ export class Modal extends React.Component<Props, {}> {
   render() {
     return (
       <div id='myModal' className='modal'>
-
-      <!-- Modal content -->
       <div className='modal-content'>
         <div className='modal-header'>
           <span className='close'>&times;</span>

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import '../styles/notepad.css';
-import { Dialog, DialogTitle, TextField, Button } from '@material-ui/core';
 import { MdCheck, MdClose, MdDelete } from 'react-icons/md';
 export class Notepad extends React.Component<Props, State> {
   divRef: React.RefObject<any> = React.createRef();
@@ -16,7 +15,7 @@ export class Notepad extends React.Component<Props, State> {
       boldClass: 0,
       toggleTheme: true,
       currentContent: '',
-      currentTitle: '',
+      currentTitle: ''
     };
   }
   createLink = () => {
@@ -30,51 +29,6 @@ export class Notepad extends React.Component<Props, State> {
     const notepadId = document.getElementById('table');
     notepadId?.appendChild(span);
   }
-
-  insertLinkDialog = () => (
-    <Dialog
-      onClose={this.toggleDialog}
-      open={this.state.toggleDialog}
-      className={'dialog'}
-    >
-      <DialogTitle
-        style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
-      >
-        Insert Link
-      </DialogTitle>
-      <TextField
-        style={{ width: '80px', padding: '10px' }}
-        placeholder={'Name:'}
-        onChange={(e) => {
-          this.setState({ linkName: e.target.value });
-        }}
-      ></TextField>
-      <TextField
-        style={{ padding: '10px' }}
-        placeholder={'https://www.example.com'}
-        onChange={(e) => {
-          this.setState({ linkURL: e.target.value });
-        }}
-      ></TextField>
-      <Button
-        style={{
-          textTransform: 'capitalize',
-          borderRadius: '0px',
-          display: 'block',
-          margin: 'auto',
-          marginBottom: '6px',
-        }}
-        variant='contained'
-        color='primary'
-        onClick={() => {
-          this.toggleDialog();
-          this.createLink();
-        }}
-      >
-        Insert
-      </Button>
-    </Dialog>
-  )
 
   toggleDialog = () => {
     this.setState({ toggleDialog: !this.state.toggleDialog });
@@ -132,14 +86,40 @@ export class Notepad extends React.Component<Props, State> {
     items.splice(ind, 1);
     this.setState({ items });
   }
+  graphql = () => {
+    const query = `
+    query {
+      allNotes{
+        edges{
+          node{
+            url
+            notes
+          }
+        }
+      }
+    }
+    `;
+    const url = 'http://localhost:8000/graphql/';
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query })
+    };
+
+    fetch(url, options)
+    .then(res => res.json())
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+  }
   render() {
+    this.graphql();
     return (
       <div>
         <div
           style={{
             marginBottom: '0.5em',
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'center'
           }}
         >
           {/* <button
@@ -188,7 +168,7 @@ export class Notepad extends React.Component<Props, State> {
               borderLeft: '5px solid',
               borderLeftColor: 'red',
               cursor: 'pointer',
-              marginRight: '10px',
+              marginRight: '10px'
             }}
           >
             {this.state.toggleTheme ? 'Dark' : 'Light'}
@@ -199,14 +179,14 @@ export class Notepad extends React.Component<Props, State> {
             className='pane'
             style={{
               background: this.state.toggleTheme ? '#272525' : 'whitesmoke',
-              color: this.state.toggleTheme ? 'white' : 'black',
+              color: this.state.toggleTheme ? 'white' : 'black'
             }}
           >
             <div
               style={{
                 textAlign: 'center',
                 padding: '10px',
-                fontWeight: 'bold',
+                fontWeight: 'bold'
               }}
             >
               NOTES
@@ -257,7 +237,7 @@ export class Notepad extends React.Component<Props, State> {
               style={{
                 borderBottom: this.state.toggleTheme
                   ? '1px solid white'
-                  : '1px solid black',
+                  : '1px solid black'
               }}
             >
               <input
@@ -270,7 +250,7 @@ export class Notepad extends React.Component<Props, State> {
                   fontSize: '16px',
                   borderLeft: this.state.toggleTheme
                     ? '1px solid white'
-                    : 'none',
+                    : 'none'
                 }}
                 className='title'
                 id='note-title'
@@ -284,7 +264,7 @@ export class Notepad extends React.Component<Props, State> {
               style={{
                 color: this.state.toggleTheme ? 'white' : 'black',
                 background: this.state.toggleTheme ? 'black' : 'white',
-                borderLeft: this.state.toggleTheme ? '1px solid white' : 'none',
+                borderLeft: this.state.toggleTheme ? '1px solid white' : 'none'
               }}
               contentEditable={true}
               id='table'
@@ -304,7 +284,7 @@ export class Notepad extends React.Component<Props, State> {
                 borderTop: this.state.toggleTheme
                   ? '1px solid white'
                   : '2px solid black',
-                borderLeft: this.state.toggleTheme ? '1px solid white' : 'none',
+                borderLeft: this.state.toggleTheme ? '1px solid white' : 'none'
               }}
             >
               <MdClose
@@ -322,7 +302,6 @@ export class Notepad extends React.Component<Props, State> {
             </div>
           </div>
         </div>
-        {this.insertLinkDialog()}
       </div>
     );
   }
