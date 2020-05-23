@@ -1,6 +1,8 @@
 import * as React from 'react';
 import '../styles/notepad.css';
 import { MdCheck, MdClose, MdDelete } from 'react-icons/md';
+import { graphql } from '../helpers/index';
+import { notesMutation, notesQuery } from '../components/constant';
 export class Notepad extends React.Component<Props, State> {
   divRef: React.RefObject<any> = React.createRef();
   titleRef: React.RefObject<HTMLInputElement> = React.createRef();
@@ -15,7 +17,7 @@ export class Notepad extends React.Component<Props, State> {
       boldClass: 0,
       toggleTheme: true,
       currentContent: '',
-      currentTitle: ''
+      currentTitle: '',
     };
   }
   createLink = () => {
@@ -66,6 +68,13 @@ export class Notepad extends React.Component<Props, State> {
   save = () => {
     let { items, currentContent, currentTitle } = this.state;
     if (currentTitle.length) {
+      const variables = {
+        input:{
+          url: localStorage.getItem('url_path'),
+          notes: JSON.stringify({ title: currentTitle, content: currentContent })
+        }
+      };
+      graphql(notesMutation, variables);
       items.push({ title: currentTitle, content: currentContent });
       this.setState({ items, currentContent, currentTitle });
       this.clear();
@@ -86,75 +95,16 @@ export class Notepad extends React.Component<Props, State> {
     items.splice(ind, 1);
     this.setState({ items });
   }
-  graphql = () => {
-    const query = `
-    query {
-      allNotes{
-        edges{
-          node{
-            url
-            notes
-          }
-        }
-      }
-    }
-    `;
-    const url = 'http://localhost:8000/graphql/';
-    const options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query })
-    };
-
-    fetch(url, options)
-    .then(res => res.json())
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-  }
   render() {
-    this.graphql();
     return (
       <div>
         <div
           style={{
             marginBottom: '0.5em',
             display: 'flex',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}
         >
-          {/* <button
-            onClick={this.toggleDialog}
-            style={{
-              color: 'black',
-              background: 'white',
-              fontSize: '16px',
-              padding: '8px',
-              border: 'none',
-              borderLeft: '5px solid',
-              borderLeftColor: 'red',
-              cursor: 'pointer',
-              marginRight: '10px',
-            }}
-          >
-            Link
-          </button> */}
-          {/* <button
-            onClick={() => this.boldText()}
-            style={{
-              color: 'black',
-              background: 'white',
-              fontSize: '16px',
-              padding: '8px',
-              border: 'none',
-              borderLeft: '5px solid',
-              borderLeftColor: 'red',
-              cursor: 'pointer',
-              fontWeight: this.state.toggleBold ? 'bolder' : 'normal',
-              marginRight: '10px',
-            }}
-          >
-            B
-          </button> */}
           <button
             onClick={() => {
               this.setState({ toggleTheme: !this.state.toggleTheme });
@@ -168,7 +118,7 @@ export class Notepad extends React.Component<Props, State> {
               borderLeft: '5px solid',
               borderLeftColor: 'red',
               cursor: 'pointer',
-              marginRight: '10px'
+              marginRight: '10px',
             }}
           >
             {this.state.toggleTheme ? 'Dark' : 'Light'}
@@ -179,14 +129,14 @@ export class Notepad extends React.Component<Props, State> {
             className='pane'
             style={{
               background: this.state.toggleTheme ? '#272525' : 'whitesmoke',
-              color: this.state.toggleTheme ? 'white' : 'black'
+              color: this.state.toggleTheme ? 'white' : 'black',
             }}
           >
             <div
               style={{
                 textAlign: 'center',
                 padding: '10px',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
               }}
             >
               NOTES
@@ -222,13 +172,11 @@ export class Notepad extends React.Component<Props, State> {
                   margin: '50% 0 50% 0',
                   textAlign: 'center',
                   height: 'auto',
-                  color: '#908f8f'
+                  color: '#908f8f',
                 }}
               >
                 Nothing here!
-                <p>
-                ¯\_(ツ)_/¯
-                </p>
+                <p>¯\_(ツ)_/¯</p>
               </div>
             )}
           </div>
@@ -237,7 +185,7 @@ export class Notepad extends React.Component<Props, State> {
               style={{
                 borderBottom: this.state.toggleTheme
                   ? '1px solid white'
-                  : '1px solid black'
+                  : '1px solid black',
               }}
             >
               <input
@@ -250,7 +198,7 @@ export class Notepad extends React.Component<Props, State> {
                   fontSize: '16px',
                   borderLeft: this.state.toggleTheme
                     ? '1px solid white'
-                    : 'none'
+                    : 'none',
                 }}
                 className='title'
                 id='note-title'
@@ -264,7 +212,7 @@ export class Notepad extends React.Component<Props, State> {
               style={{
                 color: this.state.toggleTheme ? 'white' : 'black',
                 background: this.state.toggleTheme ? 'black' : 'white',
-                borderLeft: this.state.toggleTheme ? '1px solid white' : 'none'
+                borderLeft: this.state.toggleTheme ? '1px solid white' : 'none',
               }}
               contentEditable={true}
               id='table'
@@ -284,7 +232,7 @@ export class Notepad extends React.Component<Props, State> {
                 borderTop: this.state.toggleTheme
                   ? '1px solid white'
                   : '2px solid black',
-                borderLeft: this.state.toggleTheme ? '1px solid white' : 'none'
+                borderLeft: this.state.toggleTheme ? '1px solid white' : 'none',
               }}
             >
               <MdClose

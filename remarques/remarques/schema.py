@@ -3,14 +3,14 @@ from notes.models import Notepad
 from graphene_django.types import DjangoObjectType
 from graphene.relay import Node
 from graphene_django.filter import DjangoFilterConnectionField
-
+from graphql_relay.node.node import from_global_id
 
 class NotesNode(DjangoObjectType):
     class Meta:
         model = Notepad
         filter_fields = {
             'id': ['exact'],
-            'url': ['icontains'],
+            'url': ['icontains', 'exact'],
         }
         interfaces = (Node,)
         fields = '__all__'
@@ -26,10 +26,13 @@ class CreateNotes(Mutation):
     notes = Field(NotesNode)
     @staticmethod
     def mutate(root, info, input=None):
-        notes_instance = Notepad(url=input.url, notes=input.notes)
+        if input.id:
+            notes_instance = Notepad(id=from_global_id(input.id)[1], url=input.url, notes=input.notes)
+        else:
+            notes_instance = Notepad(url=input.url, notes=input.notes)
         notes_instance.save()
         return CreateNotes(notes=notes_instance)
-    
+
 class Mutation(ObjectType):
     create_notes = CreateNotes.Field()
 
