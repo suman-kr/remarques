@@ -13,6 +13,7 @@ djangorestframework = "*"
 graphene-django = "*"
 psycopg2-binary = "*"
 django-filter = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.6"

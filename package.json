@@ -11,6 +11,10 @@
     "check-types": "tsc",
     "deploy": "gh-pages -d dist"
   },
+  "engines": {
+    "node": "12.16.1",
+    "npm": "6.13.4"
+  },
   "homepage": "https://suman-kr.github.io/remarques/",
   "keywords": [],
   "author": "",
