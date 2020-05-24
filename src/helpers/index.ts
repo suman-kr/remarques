@@ -10,14 +10,14 @@ export function generateURL() {
     return result;
 }
 
-export function graphql(query: string, variables: any) {
+export async function graphql(query: string, variables: any) {
     const options = {
         method: 'POST',
         headers: HEADERS,
         body: JSON.stringify({ query, variables })
     };
-    fetch(API_URL, options)
+    return await fetch(API_URL, options)
         .then(res => res.json())
-        .then(res => console.log(res))
+        .then((res) =>  res)
         .catch(err => console.log(err));
 }

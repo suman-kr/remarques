@@ -18,7 +18,22 @@ export class Notepad extends React.Component<Props, State> {
       toggleTheme: true,
       currentContent: '',
       currentTitle: '',
+      ID: null
     };
+  }
+  async componentDidMount() {
+    const variables = {
+      url: localStorage.getItem('url_path')
+    };
+    const a = await graphql(notesQuery, variables);
+    if (a.data.allNotes.edges.length > 0) {
+      console.log(JSON.parse(a.data.allNotes.edges[0].node.notes));
+
+      this.setState({
+        items: JSON.parse(a.data.allNotes.edges[0].node.notes),
+        ID: a.data.allNotes.edges[0].node.id
+      });
+    }
   }
   createLink = () => {
     const anchorTag = document.createElement('a');
@@ -65,17 +80,18 @@ export class Notepad extends React.Component<Props, State> {
     this.setState({ currentContent, currentTitle });
   }
 
-  save = () => {
-    let { items, currentContent, currentTitle } = this.state;
+  save = async () => {
+    let { items, currentContent, currentTitle, ID } = this.state;
     if (currentTitle.length) {
+      items.push({ title: currentTitle, content: currentContent });
       const variables = {
-        input:{
+        input: {
+          id: ID,
           url: localStorage.getItem('url_path'),
-          notes: JSON.stringify({ title: currentTitle, content: currentContent })
+          notes: JSON.stringify(items)
         }
       };
-      graphql(notesMutation, variables);
-      items.push({ title: currentTitle, content: currentContent });
+      await graphql(notesMutation, variables);
       this.setState({ items, currentContent, currentTitle });
       this.clear();
     }
@@ -266,4 +282,5 @@ interface State {
   toggleTheme: boolean;
   currentContent: string;
   currentTitle: string;
+  ID: any;
 }
