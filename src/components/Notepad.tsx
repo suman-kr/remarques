@@ -25,15 +25,17 @@ export class Notepad extends React.Component<Props, State> {
     const variables = {
       url: localStorage.getItem('url_path')
     };
-    const a = await graphql(notesQuery, variables);
-    if (a.data.allNotes.edges.length > 0) {
-      console.log(JSON.parse(a.data.allNotes.edges[0].node.notes));
+    const allNotes = await graphql(notesQuery, variables);
+    if (allNotes.data.allNotes.edges.length > 0) {
 
       this.setState({
-        items: JSON.parse(a.data.allNotes.edges[0].node.notes),
-        ID: a.data.allNotes.edges[0].node.id
+        items: JSON.parse(allNotes.data.allNotes.edges[0].node.notes),
+        ID: allNotes.data.allNotes.edges[0].node.id
       });
     }
+  }
+  componentWillUnmount() {
+    localStorage.removeItem('url_path');
   }
   createLink = () => {
     const anchorTag = document.createElement('a');
@@ -106,9 +108,17 @@ export class Notepad extends React.Component<Props, State> {
     this.setState({ currentTitle, currentContent });
   }
 
-  deleteNote = (ind: number) => {
-    const { items } = this.state;
+  deleteNote = async (ind: number) => {
+    const { items, ID } = this.state;
     items.splice(ind, 1);
+    const variables = {
+      input: {
+        id: ID,
+        url: localStorage.getItem('url_path'),
+        notes: JSON.stringify(items)
+      }
+    };
+    await graphql(notesMutation, variables);
     this.setState({ items });
   }
   render() {
