@@ -96,6 +96,8 @@ export class Notepad extends React.Component<Props, State> {
       await graphql(notesMutation, variables);
       this.setState({ items, currentContent, currentTitle });
       this.clear();
+    } else {
+      alert('Title required. :(')
     }
   }
 
