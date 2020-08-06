@@ -9,12 +9,7 @@ export class Notepad extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      toggleDialog: false,
-      linkName: '',
-      linkURL: '',
       items: [],
-      toggleBold: false,
-      boldClass: 0,
       toggleTheme: true,
       currentContent: '',
       currentTitle: '',
@@ -37,21 +32,22 @@ export class Notepad extends React.Component<Props, State> {
   componentWillUnmount() {
     localStorage.removeItem('url_path');
   }
-  createLink = () => {
-    const anchorTag = document.createElement('a');
-    anchorTag.setAttribute('href', this.state.linkURL);
-    const textNode = document.createTextNode(this.state.linkName);
-    anchorTag.appendChild(textNode);
-    const span = document.createElement('span');
-    span.setAttribute('contenteditable', 'false');
-    span.appendChild(anchorTag);
-    const notepadId = document.getElementById('table');
-    notepadId?.appendChild(span);
-  }
+  // Not needed!
+  // createLink = () => {
+  //   const anchorTag = document.createElement('a');
+  //   anchorTag.setAttribute('href', this.state.linkURL);
+  //   const textNode = document.createTextNode(this.state.linkName);
+  //   anchorTag.appendChild(textNode);
+  //   const span = document.createElement('span');
+  //   span.setAttribute('contenteditable', 'false');
+  //   span.appendChild(anchorTag);
+  //   const notepadId = document.getElementById('table');
+  //   notepadId?.appendChild(span);
+  // }
 
-  toggleDialog = () => {
-    this.setState({ toggleDialog: !this.state.toggleDialog });
-  }
+  // toggleDialog = () => {
+  //   this.setState({ toggleDialog: !this.state.toggleDialog });
+  // }
   onChangeDivContent = (e: string) => {
     let { currentContent } = this.state;
     currentContent = e;
@@ -62,16 +58,17 @@ export class Notepad extends React.Component<Props, State> {
     currentTitle = e;
     this.setState({ currentTitle });
   }
-  onPressKey = (key: string, code: number, which: number) => {
-    const { toggleBold } = this.state;
-    const { boldClass } = this.state;
-    console.log(code);
-    console.log(which);
-    if (toggleBold) {
-      const a = document.getElementsByClassName(`bold-${boldClass}`);
-      a[0].innerHTML += key;
-    }
-  }
+  // Not needed!
+  // onPressKey = (key: string, code: number, which: number) => {
+  //   const { toggleBold } = this.state;
+  //   const { boldClass } = this.state;
+  //   console.log(code);
+  //   console.log(which);
+  //   if (toggleBold) {
+  //     const a = document.getElementsByClassName(`bold-${boldClass}`);
+  //     a[0].innerHTML += key;
+  //   }
+  // }
 
   clear = () => {
     this.divRef.current.innerHTML = '';
@@ -97,7 +94,7 @@ export class Notepad extends React.Component<Props, State> {
       this.setState({ items, currentContent, currentTitle });
       this.clear();
     } else {
-      alert('Title required. :(')
+      alert('Title required. :(');
     }
   }
 
@@ -130,7 +127,7 @@ export class Notepad extends React.Component<Props, State> {
           style={{
             marginBottom: '0.5em',
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'center'
           }}
         >
           <button
@@ -146,7 +143,7 @@ export class Notepad extends React.Component<Props, State> {
               borderLeft: '5px solid',
               borderLeftColor: 'red',
               cursor: 'pointer',
-              marginRight: '10px',
+              marginRight: '10px'
             }}
           >
             {this.state.toggleTheme ? 'Dark' : 'Light'}
@@ -157,14 +154,14 @@ export class Notepad extends React.Component<Props, State> {
             className='pane'
             style={{
               background: this.state.toggleTheme ? '#272525' : 'whitesmoke',
-              color: this.state.toggleTheme ? 'white' : 'black',
+              color: this.state.toggleTheme ? 'white' : 'black'
             }}
           >
             <div
               style={{
                 textAlign: 'center',
                 padding: '10px',
-                fontWeight: 'bold',
+                fontWeight: 'bold'
               }}
             >
               NOTES
@@ -200,7 +197,7 @@ export class Notepad extends React.Component<Props, State> {
                   margin: '50% 0 50% 0',
                   textAlign: 'center',
                   height: 'auto',
-                  color: '#908f8f',
+                  color: '#908f8f'
                 }}
               >
                 Nothing here!
@@ -213,7 +210,7 @@ export class Notepad extends React.Component<Props, State> {
               style={{
                 borderBottom: this.state.toggleTheme
                   ? '1px solid white'
-                  : '1px solid black',
+                  : '1px solid black'
               }}
             >
               <input
@@ -226,7 +223,7 @@ export class Notepad extends React.Component<Props, State> {
                   fontSize: '16px',
                   borderLeft: this.state.toggleTheme
                     ? '1px solid white'
-                    : 'none',
+                    : 'none'
                 }}
                 className='title'
                 id='note-title'
@@ -240,7 +237,7 @@ export class Notepad extends React.Component<Props, State> {
               style={{
                 color: this.state.toggleTheme ? 'white' : 'black',
                 background: this.state.toggleTheme ? 'black' : 'white',
-                borderLeft: this.state.toggleTheme ? '1px solid white' : 'none',
+                borderLeft: this.state.toggleTheme ? '1px solid white' : 'none'
               }}
               contentEditable={true}
               id='table'
@@ -260,7 +257,7 @@ export class Notepad extends React.Component<Props, State> {
                 borderTop: this.state.toggleTheme
                   ? '1px solid white'
                   : '2px solid black',
-                borderLeft: this.state.toggleTheme ? '1px solid white' : 'none',
+                borderLeft: this.state.toggleTheme ? '1px solid white' : 'none'
               }}
             >
               <MdClose
@@ -285,12 +282,7 @@ export class Notepad extends React.Component<Props, State> {
 interface Props {}
 
 interface State {
-  toggleDialog: boolean;
-  linkName: string;
-  linkURL: string;
   items: { title: string; content: string }[];
-  toggleBold: boolean;
-  boldClass: number;
   toggleTheme: boolean;
   currentContent: string;
   currentTitle: string;
